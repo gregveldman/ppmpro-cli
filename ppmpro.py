@@ -41,7 +41,8 @@ def report(data, today):
     dates = [e.get('entryDate') for e in data.get('timesheet').get(
         'activities')[0].get('entries')]
     totals = [0.0 for i in range(len(dates))]
-    print("DATES:\t\t\t\t", end='')
+    print("{:<25}DATES:\t".format(
+        '[' + data.get('timesheet').get('stateName', 'UNKNOWN') + ']'), end='')
     for d in dates:
         print("{:<6}".format(d.lstrip("{}-".format(str(today.year)))), end='')
 
@@ -60,7 +61,7 @@ def report(data, today):
         print()
 
     # Totals for each day
-    print("TOTALS:\t\t\t\t", end='')
+    print("\t\t\tTOTALS:\t", end='')
     for t in totals:
         print("{:<4.1f}  ".format(t), end='')
 

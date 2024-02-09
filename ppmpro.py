@@ -44,7 +44,8 @@ def report(data, today):
     print("{:<25}DATES:\t".format(
         '[' + data.get('timesheet').get('stateName', 'UNKNOWN') + ']'), end='')
     for d in dates:
-        print("{:<6}".format(d.lstrip("{}-".format(str(today.year)))), end='')
+        print("{:<6}".format(d.replace("{}-".format(str(today.year)), "")),
+              end='')
 
     print()
 
@@ -194,7 +195,7 @@ def main():
     if (args.update):
         # PUT request to set hours for specific activities/entries
         make_req('{}/timesheet/{}/activities'.format(
-                base_url, timesheet),
+            base_url, timesheet),
             cookie, method='PUT', proxy=args.proxy,
             data=json.dumps(build_upload(
                 data, today, args.hours)).encode('utf-8'))
@@ -202,7 +203,7 @@ def main():
     if (args.submit):
         # PUT request to submit the timesheet for approval
         make_req('{}/timesheet/{}?submit=true'.format(
-                base_url, timesheet),
+            base_url, timesheet),
             cookie, method='PUT', proxy=args.proxy,
             data=json.dumps({'note': ''}).encode('utf-8'))
 
